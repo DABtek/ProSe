@@ -1,0 +1,56 @@
+name: Bug report
+description: Report a reproducible problem in ProSe.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing this issue. Please include steps and expected behavior so we can reproduce quickly.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is happening?
+      placeholder: "A short description of the problem."
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Exact sequence that reproduces the bug.
+      placeholder: |
+        1. Go to ...
+        2. Click ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, device, and app version/commit if known.
+      placeholder: "macOS 15, Chrome 122, commit 267cd3e"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Paste logs or attach screenshots if available.

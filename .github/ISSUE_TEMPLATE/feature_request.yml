@@ -1,0 +1,54 @@
+name: Feature request
+description: Propose an improvement for ProSe.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please describe the user problem first, then the solution.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What user problem are we trying to solve?
+      placeholder: "When users upload multiple court files, ..."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What do you want to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any other approaches considered?
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - OCR / ingestion
+        - Knowledge base / search
+        - Drafting
+        - Timeline / reminders
+        - Learning / glossary
+        - Auth / accounts
+        - UI / UX
+        - Infrastructure / CI
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Define done in clear testable terms.
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2

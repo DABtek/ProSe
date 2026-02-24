@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Legal Safety Policy
+    url: https://github.com/DABtek/ProSe/blob/main/LEGAL_SAFETY_POLICY.md
+    about: Review legal guardrails before filing product or content requests.
