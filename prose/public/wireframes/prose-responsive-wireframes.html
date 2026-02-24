@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProSe — Responsive Wireframe Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root {
+  --navy:       #0D1B2A;
+  --navy-mid:   #1A2E42;
+  --navy-light: #243B55;
+  --gold:       #C8A96E;
+  --gold-light: #E2C98A;
+  --cream:      #F5F1EA;
+  --cream-dk:   #EAE4D8;
+  --white:      #FFFFFF;
+  --text:       #1A1A2E;
+  --muted:      #6B7280;
+  --border:     #D6CFC3;
+  --success:    #3D8B5E;
+  --danger:     #B04040;
+  --chip-blue-bg: #E8F0FE; --chip-blue-fg: #1A56DB;
+  --chip-gold-bg: #FEF3CD; --chip-gold-fg: #92650A;
+  --chip-green-bg:#DCFCE7; --chip-green-fg:#166534;
+  --chip-red-bg:  #FEE2E2; --chip-red-fg:  #991B1B;
+  --annotation: #E25822;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #D8D3CA;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  padding: 48px 24px 80px;
+}
+
+/* ═══════════════════════════════════════
+   PAGE CHROME
+═══════════════════════════════════════ */
+.page-title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.page-title h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+.page-title p { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+
+.device-section { margin-bottom: 100px; }
+
+.device-section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.device-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* annotation */
+.ann {
+  font-size: 0.65rem;
+  color: var(--annotation);
+  font-style: italic;
+  background: rgba(226,88,34,0.07);
+  border-left: 2px solid var(--annotation);
+  padding: 3px 8px;
+  border-radius: 0 4px 4px 0;
+  margin-top: 5px;
+  display: block;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════
+   SHARED ATOMS
+═══════════════════════════════════════ */
+.btn-primary {
+  display: block; width: 100%;
+  background: var(--gold); color: var(--navy);
+  font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.88rem;
+  padding: 13px; border-radius: 10px; text-align: center;
+  border: none; cursor: pointer; letter-spacing: 0.01em;
+}
+.btn-secondary {
+  display: block; width: 100%;
+  background: transparent; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.83rem;
+  padding: 11px; border-radius: 10px; text-align: center;
+  border: 1.5px solid var(--border); cursor: pointer; margin-top: 8px;
+}
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; color: var(--navy);
+  font-weight: 600; font-size: 0.8rem;
+  padding: 7px 14px; border-radius: 8px;
+  border: 1.5px solid var(--navy); cursor: pointer;
+}
+.btn-sm {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--gold); color: var(--navy);
+  font-weight: 600; font-size: 0.75rem;
+  padding: 6px 12px; border-radius: 7px; border: none; cursor: pointer;
+}
+
+.chip {
+  display: inline-block; padding: 3px 9px;
+  border-radius: 100px; font-size: 0.67rem; font-weight: 600;
+}
+.chip-blue  { background: var(--chip-blue-bg);  color: var(--chip-blue-fg); }
+.chip-gold  { background: var(--chip-gold-bg);  color: var(--chip-gold-fg); }
+.chip-green { background: var(--chip-green-bg); color: var(--chip-green-fg); }
+.chip-red   { background: var(--chip-red-bg);   color: var(--chip-red-fg); }
+
+.form-label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 5px; display: block;
+}
+.form-input {
+  width: 100%; background: var(--white);
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 10px 13px; font-size: 0.85rem; color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+}
+.form-input.ph { color: var(--muted); }
+.form-select {
+  width: 100%; background: var(--white);
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 10px 36px 10px 13px; font-size: 0.85rem; color: var(--text);
+  font-family: 'DM Sans', sans-serif; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 13px center;
+}
+.form-group { margin-bottom: 14px; }
+
+.section-title {
+  font-size: 0.67rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+}
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+/* role card */
+.role-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 13px 10px; text-align: center; cursor: pointer;
+}
+.role-card.selected { border-color: var(--gold); background: #FEFAF2; }
+.role-card .rc-icon { font-size: 1.3rem; margin-bottom: 4px; }
+.role-card .rc-name { font-size: 0.78rem; font-weight: 600; }
+.role-card .rc-desc { font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
+
+/* progress */
+.prog-wrap { background: rgba(255,255,255,0.15); border-radius: 100px; height: 4px; margin-top: 14px; }
+.prog-fill  { height: 4px; border-radius: 100px; background: var(--gold); }
+.prog-label { font-size: 0.68rem; color: rgba(255,255,255,0.5); margin-top: 5px; text-align: right; }
+
+/* doc list */
+.doc-item {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 11px 13px;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 7px;
+}
+.doc-icon { font-size: 1.3rem; flex-shrink: 0; }
+.doc-info  { flex: 1; }
+.doc-name  { font-size: 0.83rem; font-weight: 600; }
+.doc-meta  { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+
+/* analysis */
+.analysis-card {
+  background: var(--navy); border-radius: 12px; padding: 15px; color: white; margin-bottom: 10px;
+}
+.ac-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; }
+.ac-text  { font-size: 0.8rem; color: rgba(255,255,255,0.8); line-height: 1.55; }
+.ac-point { display: flex; gap: 7px; font-size: 0.75rem; color: rgba(255,255,255,0.72); margin-top: 6px; line-height: 1.4; }
+.ac-point::before { content: '›'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+
+/* upload */
+.upload-zone {
+  background: var(--white); border: 2px dashed var(--border);
+  border-radius: 12px; padding: 26px 18px; text-align: center; margin-bottom: 14px;
+}
+.uz-icon  { font-size: 1.8rem; margin-bottom: 6px; }
+.uz-title { font-size: 0.88rem; font-weight: 600; }
+.uz-sub   { font-size: 0.73rem; color: var(--muted); margin-top: 3px; }
+.uz-types {
+  font-size: 0.65rem; color: var(--muted); margin-top: 8px;
+  background: var(--cream); border-radius: 5px; padding: 4px 9px; display: inline-block;
+}
+
+/* timeline */
+.tl-summary {
+  display: grid; gap: 7px; margin-bottom: 18px;
+}
+.tl-stat {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 11px 9px; text-align: center;
+}
+.tl-num   { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--navy); line-height: 1; }
+.tl-lbl   { font-size: 0.62rem; color: var(--muted); margin-top: 3px; line-height: 1.3; }
+
+.tl-track { position: relative; padding-left: 26px; }
+.tl-track::before {
+  content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px;
+  width: 2px; background: var(--border);
+}
+.tl-event { position: relative; margin-bottom: 15px; }
+.tl-dot {
+  position: absolute; left: -22px; top: 4px;
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 2px solid var(--white); box-shadow: 0 0 0 2px var(--border);
+  background: var(--muted);
+}
+.tl-dot.done     { background: var(--success); box-shadow: 0 0 0 2px var(--success); }
+.tl-dot.upcoming { background: var(--gold);    box-shadow: 0 0 0 2px var(--gold); }
+.tl-dot.alert    { background: var(--danger);  box-shadow: 0 0 0 2px var(--danger); }
+
+.tl-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 11px 13px;
+}
+.tl-card.upcoming-card { border-color: var(--gold); background: #FEFAF2; }
+.tl-card.alert-card    { border-color: #F8A0A0; background: #FFF5F5; }
+.tl-date  { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.tl-title { font-size: 0.85rem; font-weight: 600; }
+.tl-desc  { font-size: 0.73rem; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+.tl-action {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.7rem; font-weight: 600; color: var(--navy);
+  margin-top: 7px; padding: 3px 9px;
+  background: var(--cream); border-radius: 6px;
+}
+
+
+/* ═══════════════════════════════════════
+   ██████  PHONE  ██████
+   iPhone 17 Pro Max — 430 × 932 pt
+═══════════════════════════════════════ */
+
+.phone-row {
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.phone-wrap { flex-shrink: 0; width: 390px; }
+.phone-screen-label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+}
+.phone-frame {
+  width: 390px;
+  background: var(--white);
+  border-radius: 50px;
+  box-shadow: 0 28px 80px rgba(13,27,42,0.22), 0 4px 16px rgba(13,27,42,0.08);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+
+/* status bar */
+.sb {
+  background: var(--navy);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 24px 10px;
+  font-size: 0.7rem; color: rgba(255,255,255,0.8); font-weight: 500;
+}
+.sb .notch {
+  width: 90px; height: 22px; background: #000;
+  border-radius: 12px; margin: -4px auto 0;
+}
+
+/* screen header (navy) */
+.sh {
+  background: var(--navy); padding: 18px 22px 22px; color: white;
+}
+.sh .logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem; color: var(--gold); letter-spacing: 0.04em;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+}
+.sh h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.45rem; font-weight: 600; line-height: 1.2;
+}
+.sh p { font-size: 0.78rem; color: rgba(255,255,255,0.58); margin-top: 5px; line-height: 1.5; }
+
+/* screen body */
+.sc { background: var(--cream); padding: 20px 22px; }
+
+/* bottom nav */
+.bnav {
+  background: var(--navy);
+  display: flex; justify-content: space-around; align-items: center;
+  padding: 12px 8px 22px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.bnav-item {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 3px; font-size: 0.58rem; color: rgba(255,255,255,0.42); font-weight: 500;
+}
+.bnav-item.active { color: var(--gold); }
+.bnav-icon { font-size: 1.15rem; }
+
+/* phone role grid */
+.role-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 14px; }
+.phone .tl-summary { grid-template-columns: 1fr 1fr 1fr; }
+
+
+/* ═══════════════════════════════════════
+   ██████  TABLET  ██████
+   iPad Pro 11" — 834 × 1194 pt
+═══════════════════════════════════════ */
+
+.tablet-row {
+  display: flex;
+  gap: 40px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.tablet-wrap { flex-shrink: 0; width: 834px; }
+.tablet-screen-label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+}
+.tablet-frame {
+  width: 834px;
+  background: var(--white);
+  border-radius: 28px;
+  box-shadow: 0 28px 80px rgba(13,27,42,0.20), 0 4px 16px rgba(13,27,42,0.08);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+
+/* tablet status bar */
+.tab-sb {
+  background: var(--navy);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 28px;
+  font-size: 0.75rem; color: rgba(255,255,255,0.8); font-weight: 500;
+}
+
+/* tablet nav (top) */
+.tab-nav {
+  background: var(--navy);
+  display: flex; align-items: center;
+  padding: 0 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  gap: 28px;
+}
+.tab-nav .tab-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: var(--gold);
+  letter-spacing: 0.04em;
+  padding: 14px 0;
+  margin-right: auto;
+  display: flex; align-items: center; gap: 6px;
+}
+.tab-nav-item {
+  font-size: 0.78rem; font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  padding: 14px 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.tab-nav-item.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* tablet layout: sidebar + content */
+.tab-body {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 900px;
+}
+.tab-sidebar {
+  background: var(--navy-mid);
+  padding: 24px 20px;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+.tab-content {
+  background: var(--cream);
+  padding: 28px;
+}
+
+/* tablet sidebar items */
+.tab-sh {
+  color: white;
+  margin-bottom: 24px;
+}
+.tab-sh h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 600; line-height: 1.2;
+  margin-bottom: 6px;
+}
+.tab-sh p { font-size: 0.76rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.tab-sh .prog-wrap { background: rgba(255,255,255,0.12); }
+
+.tab-sidebar .form-group { margin-bottom: 12px; }
+.tab-sidebar .form-label { color: rgba(255,255,255,0.45); }
+.tab-sidebar .form-input { font-size: 0.82rem; padding: 9px 12px; }
+.tab-sidebar .form-select { font-size: 0.82rem; padding: 9px 32px 9px 12px; }
+
+/* tablet right panel heading */
+.tab-panel-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 600; color: var(--navy);
+  margin-bottom: 18px;
+}
+
+/* tablet 2-col grids */
+.tab-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.tab-three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+/* role grid for tablet */
+.tab-role-card {
+  background: var(--white); border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 14px; text-align: center; cursor: pointer;
+}
+.tab-role-card.selected { border-color: var(--gold); background: rgba(200,169,110,0.12); }
+.tab-role-card .rc-icon  { font-size: 1.4rem; margin-bottom: 5px; }
+.tab-role-card .rc-name  { font-size: 0.82rem; font-weight: 600; color: white; }
+.tab-role-card .rc-desc  { font-size: 0.67rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+/* tablet .tl */
+.tab-tl-track { position: relative; padding-left: 26px; }
+.tab-tl-track::before {
+  content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px;
+  width: 2px; background: var(--border);
+}
+.tab-tl-event { position: relative; margin-bottom: 14px; }
+.tab-tl-dot {
+  position: absolute; left: -22px; top: 4px;
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 2px solid var(--cream); box-shadow: 0 0 0 2px var(--border);
+  background: var(--muted);
+}
+.tab-tl-dot.done     { background: var(--success); box-shadow: 0 0 0 2px var(--success); }
+.tab-tl-dot.upcoming { background: var(--gold);    box-shadow: 0 0 0 2px var(--gold); }
+.tab-tl-dot.alert    { background: var(--danger);  box-shadow: 0 0 0 2px var(--danger); }
+
+
+/* ═══════════════════════════════════════
+   ██████  DESKTOP  ██████
+   MacBook Pro 16" — 1728 × 1117 pt (scaled down)
+═══════════════════════════════════════ */
+
+.desktop-row {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.desktop-wrap { width: 100%; max-width: 1400px; }
+.desktop-screen-label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+}
+.desktop-frame {
+  width: 100%;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 32px 100px rgba(13,27,42,0.22), 0 4px 20px rgba(13,27,42,0.08);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+
+/* desktop top bar */
+.dt-bar {
+  background: var(--navy);
+  display: flex; align-items: center;
+  padding: 0 32px;
+  height: 56px;
+  gap: 32px;
+}
+.dt-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem; color: var(--gold);
+  letter-spacing: 0.04em;
+  display: flex; align-items: center; gap: 7px;
+  white-space: nowrap;
+}
+.dt-nav-links {
+  display: flex; gap: 24px; align-items: center; flex: 1;
+}
+.dt-nav-link {
+  font-size: 0.82rem; font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  padding: 6px 0; border-bottom: 2px solid transparent;
+  cursor: pointer; white-space: nowrap;
+}
+.dt-nav-link.active { color: var(--gold); border-bottom-color: var(--gold); }
+.dt-nav-right {
+  display: flex; align-items: center; gap: 14px; margin-left: auto;
+}
+.dt-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--gold); color: var(--navy);
+  font-weight: 700; font-size: 0.8rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.dt-case-badge {
+  font-size: 0.72rem; color: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.07);
+  padding: 4px 10px; border-radius: 6px;
+}
+
+/* desktop layout: sidebar + main */
+.dt-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 700px;
+}
+.dt-sidebar {
+  background: var(--navy-mid);
+  padding: 28px 20px;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+.dt-main {
+  background: var(--cream);
+}
+
+/* sidebar nav items */
+.dt-sidebar-section {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+  margin: 20px 0 8px;
+}
+.dt-sidebar-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 8px;
+  font-size: 0.82rem; color: rgba(255,255,255,0.5);
+  cursor: pointer; margin-bottom: 2px;
+}
+.dt-sidebar-item.active {
+  background: rgba(200,169,110,0.14); color: var(--gold);
+}
+.dt-sidebar-item:hover { background: rgba(255,255,255,0.05); }
+.dt-sidebar-icon { font-size: 1rem; }
+
+/* desktop main layout */
+.dt-main-header {
+  background: var(--white);
+  padding: 24px 36px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.dt-main-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem; font-weight: 600; color: var(--navy);
+}
+.dt-main-header p { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+
+.dt-main-body { padding: 28px 36px; }
+
+/* desktop 3-col content */
+.dt-three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+.dt-two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.dt-form-two  { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* desktop card */
+.dt-card {
+  background: var(--white);
+  border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+}
+.dt-card-title {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+}
+
+/* onboarding stepper (desktop) */
+.dt-stepper {
+  display: flex; gap: 0; margin-bottom: 28px;
+}
+.dt-step {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  position: relative;
+}
+.dt-step::after {
+  content: ''; position: absolute;
+  top: 12px; left: 50%; width: 100%; height: 2px;
+  background: var(--border); z-index: 0;
+}
+.dt-step:last-child::after { display: none; }
+.dt-step-dot {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--border); color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700; z-index: 1;
+}
+.dt-step-dot.done { background: var(--success); color: white; }
+.dt-step-dot.active { background: var(--gold); color: var(--navy); }
+.dt-step-lbl { font-size: 0.68rem; color: var(--muted); text-align: center; line-height: 1.3; }
+
+/* desktop doc panel */
+.dt-doc-panel {
+  display: grid; grid-template-columns: 320px 1fr; gap: 20px;
+}
+
+/* large analysis card */
+.dt-analysis-card {
+  background: var(--navy); border-radius: 12px; padding: 22px; color: white;
+}
+.dt-analysis-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; color: var(--gold); margin-bottom: 6px;
+}
+.dt-analysis-sub { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-bottom: 14px; }
+.dt-analysis-point { display: flex; gap: 8px; font-size: 0.8rem; color: rgba(255,255,255,0.75); margin-bottom: 10px; line-height: 1.5; }
+.dt-analysis-point::before { content: '›'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+
+/* desktop timeline */
+.dt-tl-main {
+  display: grid; grid-template-columns: 1fr 340px; gap: 24px;
+}
+.dt-tl-track { position: relative; padding-left: 28px; }
+.dt-tl-track::before {
+  content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px;
+  width: 2px; background: var(--border);
+}
+.dt-tl-event { position: relative; margin-bottom: 16px; }
+.dt-tl-dot {
+  position: absolute; left: -24px; top: 5px;
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid var(--cream); box-shadow: 0 0 0 2px var(--border);
+  background: var(--muted);
+}
+.dt-tl-dot.done     { background: var(--success); box-shadow: 0 0 0 2px var(--success); }
+.dt-tl-dot.upcoming { background: var(--gold);    box-shadow: 0 0 0 2px var(--gold); }
+.dt-tl-dot.alert    { background: var(--danger);  box-shadow: 0 0 0 2px var(--danger); }
+
+/* right panel */
+.dt-right-panel { display: flex; flex-direction: column; gap: 14px; }
+.dt-rp-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px;
+}
+.dt-rp-title {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+}
+.dt-rp-stat-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.dt-rp-stat {
+  flex: 1; background: var(--cream); border-radius: 8px; padding: 10px;
+  text-align: center;
+}
+.dt-rp-stat-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--navy); }
+.dt-rp-stat-lbl { font-size: 0.62rem; color: var(--muted); margin-top: 2px; }
+
+.dt-checklist-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 0.78rem; color: var(--text);
+  padding: 6px 0; border-bottom: 1px solid var(--border);
+}
+.dt-checklist-item:last-child { border-bottom: none; }
+.dt-check { font-size: 0.9rem; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>⚖️ ProSe — Responsive Wireframes</h1>
+  <p>9 Screens · iPhone 17 Pro Max · iPad Pro 11" · MacBook Pro 16" · Family Court · UX Final Project</p>
+</div>
+
+
+<!-- ╔═══════════════════════════════════════╗
+     ║           PHONE SCREENS              ║
+     ╚═══════════════════════════════════════╝ -->
+<div class="device-section">
+  <div class="device-section-label">📱 iPhone 17 Pro Max — 390pt wide</div>
+  <div class="phone-row">
+
+    <!-- PHONE: ONBOARDING -->
+    <div class="phone-wrap phone">
+      <div class="phone-screen-label">1 / 3 — Onboarding</div>
+      <div class="phone-frame">
+        <div class="sb"><span>9:41</span><div class="notch"></div><span>●●● ⚡</span></div>
+        <div class="sh">
+          <div class="logo">⚖️ ProSe</div>
+          <h2>Let's set up<br>your case</h2>
+          <p>Tell us about your situation so we can build your personalized legal roadmap.</p>
+          <div class="prog-wrap"><div class="prog-fill" style="width:33%"></div></div>
+          <div class="prog-label">Step 1 of 3</div>
+        </div>
+        <div class="sc">
+          <div class="section-title">Your Role in This Case</div>
+          <div class="role-grid-2">
+            <div class="role-card selected"><div class="rc-icon">🙋</div><div class="rc-name">Petitioner</div><div class="rc-desc">I filed the case</div></div>
+            <div class="role-card"><div class="rc-icon">🛡️</div><div class="rc-name">Respondent</div><div class="rc-desc">I was served</div></div>
+          </div>
+          <span class="ann">Tap to select role. Selected card gets gold border.</span>
+          <div class="form-group">
+            <label class="form-label">Case Type</label>
+            <select class="form-select"><option>Custody & Parenting Plan</option></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">County & State</label>
+            <div class="form-input ph">e.g. Pierce County, WA</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Case Number (optional)</label>
+            <div class="form-input ph">e.g. 24-3-00412-4</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Children Involved?</label>
+            <div class="role-grid-2">
+              <div class="role-card selected"><div class="rc-name">Yes</div></div>
+              <div class="role-card"><div class="rc-name">No</div></div>
+            </div>
+          </div>
+          <button class="btn-primary">Continue →</button>
+          <span class="ann">CTA disabled until required fields completed.</span>
+        </div>
+        <div class="bnav">
+          <div class="bnav-item active"><div class="bnav-icon">🏠</div>Home</div>
+          <div class="bnav-item"><div class="bnav-icon">📄</div>Docs</div>
+          <div class="bnav-item"><div class="bnav-icon">📅</div>Timeline</div>
+          <div class="bnav-item"><div class="bnav-icon">👤</div>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHONE: DOCUMENT UPLOAD -->
+    <div class="phone-wrap phone">
+      <div class="phone-screen-label">2 / 3 — Document Upload & Analysis</div>
+      <div class="phone-frame">
+        <div class="sb"><span>9:41</span><div class="notch"></div><span>●●● ⚡</span></div>
+        <div class="sh">
+          <div class="logo">⚖️ ProSe</div>
+          <h2>My Documents</h2>
+          <p>Upload court orders, motions & correspondence for instant AI analysis.</p>
+        </div>
+        <div class="sc">
+          <div class="upload-zone">
+            <div class="uz-icon">📎</div>
+            <div class="uz-title">Upload a Document</div>
+            <div class="uz-sub">Tap to choose a file or take a photo</div>
+            <div class="uz-types">PDF · DOCX · JPG · PNG</div>
+          </div>
+          <span class="ann">Tapping opens native file picker or camera roll.</span>
+          <div class="section-title">Uploaded Files</div>
+          <div class="doc-item">
+            <div class="doc-icon">📋</div>
+            <div class="doc-info"><div class="doc-name">Parenting Plan — Draft v2</div><div class="doc-meta">Added Feb 18 · 4.2 MB</div></div>
+            <span class="chip chip-green">Analyzed</span>
+          </div>
+          <div class="doc-item">
+            <div class="doc-icon">📄</div>
+            <div class="doc-info"><div class="doc-name">Motion to Modify Custody</div><div class="doc-meta">Added Feb 20 · 1.8 MB</div></div>
+            <span class="chip chip-gold">Pending</span>
+          </div>
+          <div class="doc-item">
+            <div class="doc-icon">📬</div>
+            <div class="doc-info"><div class="doc-name">GAL Report — Feb 2025</div><div class="doc-meta">Added Feb 21 · 3.1 MB</div></div>
+            <span class="chip chip-blue">Analyzing…</span>
+          </div>
+          <span class="ann">Tap row to open doc. Status chips update in real time.</span>
+          <div class="divider"></div>
+          <div class="section-title">AI Analysis — Parenting Plan</div>
+          <div class="analysis-card">
+            <div class="ac-label">⚡ Key Findings</div>
+            <div class="ac-text">3 clauses flagged that may conflict with RCW 26.09.187 (best interest standard).</div>
+            <div class="ac-point">Holiday schedule leaves 4 major holidays unaddressed.</div>
+            <div class="ac-point">Medical decision-making lacks a tie-breaking mechanism.</div>
+            <div class="ac-point">Relocation clause doesn't meet 60-day notice per RCW 26.09.520.</div>
+          </div>
+          <span class="ann">Analysis card updates when different doc is tapped above.</span>
+          <button class="btn-primary">Ask ProSe About This</button>
+        </div>
+        <div class="bnav">
+          <div class="bnav-item"><div class="bnav-icon">🏠</div>Home</div>
+          <div class="bnav-item active"><div class="bnav-icon">📄</div>Docs</div>
+          <div class="bnav-item"><div class="bnav-icon">📅</div>Timeline</div>
+          <div class="bnav-item"><div class="bnav-icon">👤</div>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHONE: TIMELINE -->
+    <div class="phone-wrap phone">
+      <div class="phone-screen-label">3 / 3 — Timeline / Case Tracker</div>
+      <div class="phone-frame">
+        <div class="sb"><span>9:41</span><div class="notch"></div><span>●●● ⚡</span></div>
+        <div class="sh">
+          <div class="logo">⚖️ ProSe</div>
+          <h2>Case Timeline</h2>
+          <p>Pierce County · #24-3-00412-4</p>
+        </div>
+        <div class="sc">
+          <div class="tl-summary" style="grid-template-columns:1fr 1fr 1fr;">
+            <div class="tl-stat"><div class="tl-num">12</div><div class="tl-lbl">Days to Hearing</div></div>
+            <div class="tl-stat"><div class="tl-num">3</div><div class="tl-lbl">Deadlines</div></div>
+            <div class="tl-stat"><div class="tl-num">7</div><div class="tl-lbl">Docs Filed</div></div>
+          </div>
+          <span class="ann">Stats update live. Tap any stat to filter timeline view.</span>
+          <div class="section-title">Events & Deadlines</div>
+          <div class="tl-track">
+            <div class="tl-event">
+              <div class="tl-dot done"></div>
+              <div class="tl-card"><div class="tl-date">Jan 15, 2025</div><div class="tl-title">Petition Filed</div><div class="tl-desc">Case initiated. Summons served.</div></div>
+            </div>
+            <div class="tl-event">
+              <div class="tl-dot done"></div>
+              <div class="tl-card"><div class="tl-date">Feb 3, 2025</div><div class="tl-title">Temporary Orders Hearing</div><div class="tl-desc">Temporary parenting schedule established.</div></div>
+            </div>
+            <div class="tl-event">
+              <div class="tl-dot alert"></div>
+              <div class="tl-card alert-card"><div class="tl-date">⚠️ Feb 27 — 5 Days Away</div><div class="tl-title">Deadline: File Response</div><div class="tl-desc">Response to Motion to Modify due by 4:00 PM.</div><span class="tl-action">📋 View Required Docs</span></div>
+            </div>
+            <div class="tl-event">
+              <div class="tl-dot upcoming"></div>
+              <div class="tl-card upcoming-card"><div class="tl-date">Mar 6 — Upcoming</div><div class="tl-title">Custody Evaluation</div><div class="tl-desc">Dr. Simmons · 2:00 PM</div><span class="tl-action">📝 Prep Checklist</span></div>
+            </div>
+            <div class="tl-event">
+              <div class="tl-dot"></div>
+              <div class="tl-card"><div class="tl-date">Apr 14, 2025</div><div class="tl-title">Final Hearing</div><div class="tl-desc">Dept. 12 · 9:00 AM</div></div>
+            </div>
+          </div>
+          <span class="ann">🔴 urgent · 🟡 upcoming · ⚪ future · 🟢 complete</span>
+          <button class="btn-primary" style="margin-top:14px;">+ Add Event or Deadline</button>
+          <button class="btn-secondary">Export Timeline as PDF</button>
+        </div>
+        <div class="bnav">
+          <div class="bnav-item"><div class="bnav-icon">🏠</div>Home</div>
+          <div class="bnav-item"><div class="bnav-icon">📄</div>Docs</div>
+          <div class="bnav-item active"><div class="bnav-icon">📅</div>Timeline</div>
+          <div class="bnav-item"><div class="bnav-icon">👤</div>Profile</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ╔═══════════════════════════════════════╗
+     ║          TABLET SCREENS              ║
+     ╚═══════════════════════════════════════╝ -->
+<div class="device-section">
+  <div class="device-section-label">📟 iPad Pro 11" — 834pt wide</div>
+  <div class="tablet-row">
+
+    <!-- TABLET: ONBOARDING -->
+    <div class="tablet-wrap">
+      <div class="tablet-screen-label">1 / 3 — Onboarding</div>
+      <div class="tablet-frame">
+        <div class="tab-sb">
+          <span>9:41 AM</span>
+          <span style="font-family:'Playfair Display',serif;color:var(--gold);">⚖️ ProSe</span>
+          <span>●●● Wi-Fi ⚡</span>
+        </div>
+        <div class="tab-nav">
+          <div class="tab-logo">⚖️ ProSe</div>
+          <div class="tab-nav-item active">Setup</div>
+          <div class="tab-nav-item">Documents</div>
+          <div class="tab-nav-item">Timeline</div>
+          <div class="tab-nav-item">Profile</div>
+        </div>
+        <div class="tab-body">
+          <!-- sidebar: context + instructions -->
+          <div class="tab-sidebar">
+            <div class="tab-sh">
+              <h2>Case Setup</h2>
+              <p>Fill in your details to personalize your legal coaching experience.</p>
+              <div class="prog-wrap"><div class="prog-fill" style="width:33%"></div></div>
+              <div class="prog-label">Step 1 of 3</div>
+            </div>
+            <div class="divider" style="border-color:rgba(255,255,255,0.08);background:rgba(255,255,255,0.08)"></div>
+            <div class="section-title" style="color:rgba(255,255,255,0.35);">Why We Ask</div>
+            <p style="font-size:0.75rem;color:rgba(255,255,255,0.45);line-height:1.6;margin-bottom:12px;">Your role, county, and case type help ProSe surface the right statutes, deadlines, and document templates for your specific jurisdiction.</p>
+            <div style="background:rgba(200,169,110,0.1);border:1px solid rgba(200,169,110,0.25);border-radius:10px;padding:12px;">
+              <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;">Privacy Note</div>
+              <p style="font-size:0.72rem;color:rgba(255,255,255,0.5);line-height:1.5;">All case information is stored securely and never shared with third parties.</p>
+            </div>
+          </div>
+          <!-- right: form -->
+          <div class="tab-content">
+            <div class="tab-panel-title">Your Role in This Case</div>
+            <div class="tab-three-col" style="margin-bottom:20px;">
+              <div class="tab-role-card selected"><div class="rc-icon">🙋</div><div class="rc-name">Petitioner</div><div class="rc-desc">I filed the case</div></div>
+              <div class="tab-role-card"><div class="rc-icon">🛡️</div><div class="rc-name">Respondent</div><div class="rc-desc">I was served</div></div>
+              <div class="tab-role-card"><div class="rc-icon">❓</div><div class="rc-name">Not Sure</div><div class="rc-desc">Help me identify</div></div>
+            </div>
+            <span class="ann">Tablet adds a third "Not Sure" option with guidance flow.</span>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div>
+                <div class="form-group"><label class="form-label">Case Type</label><select class="form-select"><option>Custody & Parenting Plan</option></select></div>
+                <div class="form-group"><label class="form-label">County & State</label><div class="form-input ph">e.g. Pierce County, WA</div></div>
+                <div class="form-group"><label class="form-label">Case Number (optional)</label><div class="form-input ph">e.g. 24-3-00412-4</div></div>
+              </div>
+              <div>
+                <div class="form-group"><label class="form-label">Children Involved?</label>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+                    <div class="role-card selected" style="padding:10px;"><div class="rc-name">Yes</div></div>
+                    <div class="role-card" style="padding:10px;"><div class="rc-name">No</div></div>
+                  </div>
+                </div>
+                <div class="form-group"><label class="form-label">Number of Children</label><div class="form-input ph">e.g. 2</div></div>
+                <div class="form-group"><label class="form-label">Represented by Attorney?</label><select class="form-select"><option>No — Self-represented</option></select></div>
+              </div>
+            </div>
+            <button class="btn-primary" style="max-width:260px;">Continue to Step 2 →</button>
+            <span class="ann">Tablet form uses 2-column layout for efficiency. Additional fields exposed vs. phone.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLET: DOCUMENT UPLOAD -->
+    <div class="tablet-wrap">
+      <div class="tablet-screen-label">2 / 3 — Document Upload & Analysis</div>
+      <div class="tablet-frame">
+        <div class="tab-sb"><span>9:41 AM</span><span style="font-family:'Playfair Display',serif;color:var(--gold);">⚖️ ProSe</span><span>●●● Wi-Fi ⚡</span></div>
+        <div class="tab-nav">
+          <div class="tab-logo">⚖️ ProSe</div>
+          <div class="tab-nav-item">Setup</div>
+          <div class="tab-nav-item active">Documents</div>
+          <div class="tab-nav-item">Timeline</div>
+          <div class="tab-nav-item">Profile</div>
+        </div>
+        <div class="tab-body">
+          <!-- left: file list -->
+          <div class="tab-sidebar">
+            <div class="tab-sh">
+              <h2>My Documents</h2>
+              <p>Tap any file to view AI analysis in the panel.</p>
+            </div>
+            <div class="upload-zone" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);">
+              <div class="uz-icon">📎</div>
+              <div class="uz-title" style="color:white;">Upload Document</div>
+              <div class="uz-sub">Tap or drag & drop</div>
+              <div class="uz-types">PDF · DOCX · JPG · PNG</div>
+            </div>
+            <div class="section-title" style="color:rgba(255,255,255,0.35);">Uploaded Files</div>
+            <div style="background:rgba(200,169,110,0.15);border:1px solid rgba(200,169,110,0.3);border-radius:10px;padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:7px;">
+              <div style="font-size:1.2rem;">📋</div>
+              <div style="flex:1;"><div style="font-size:0.82rem;font-weight:600;color:white;">Parenting Plan — Draft v2</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.45);margin-top:2px;">Feb 18 · 4.2 MB</div></div>
+              <span class="chip chip-green">Analyzed</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:7px;">
+              <div style="font-size:1.2rem;">📄</div>
+              <div style="flex:1;"><div style="font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.8);">Motion to Modify</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4);margin-top:2px;">Feb 20 · 1.8 MB</div></div>
+              <span class="chip chip-gold">Pending</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:7px;">
+              <div style="font-size:1.2rem;">📬</div>
+              <div style="flex:1;"><div style="font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.8);">GAL Report — Feb 2025</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4);margin-top:2px;">Feb 21 · 3.1 MB</div></div>
+              <span class="chip chip-blue">Analyzing…</span>
+            </div>
+            <span class="ann">Selected file is highlighted gold. Sidebar scrolls independently.</span>
+          </div>
+          <!-- right: analysis -->
+          <div class="tab-content">
+            <div class="tab-panel-title">AI Analysis — Parenting Plan Draft v2</div>
+            <div class="tab-two-col" style="margin-bottom:18px;">
+              <div class="dt-card">
+                <div class="dt-card-title">Document Summary</div>
+                <p style="font-size:0.82rem;color:var(--text);line-height:1.6;">14-page proposed parenting plan submitted Feb 18. Covers residential schedule, decision-making authority, holiday schedule, and relocation provisions.</p>
+              </div>
+              <div class="dt-card">
+                <div class="dt-card-title">Risk Score</div>
+                <div style="display:flex;align-items:center;gap:14px;margin-top:4px;">
+                  <div style="font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--danger);">3</div>
+                  <div>
+                    <div style="font-size:0.78rem;font-weight:600;color:var(--danger);">Issues Found</div>
+                    <div style="font-size:0.72rem;color:var(--muted);margin-top:2px;">Review before filing</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="analysis-card">
+              <div class="ac-label">⚡ Key Findings</div>
+              <div class="ac-text" style="margin-bottom:10px;">3 clauses flagged that may conflict with Washington State RCW 26.09.187 (best interest of the child standard).</div>
+              <div class="ac-point">Holiday schedule leaves 4 major holidays unaddressed — potential dispute risk.</div>
+              <div class="ac-point">Medical decision-making section lacks a tie-breaking mechanism.</div>
+              <div class="ac-point">Relocation clause does not meet the 60-day notice requirement per RCW 26.09.520.</div>
+            </div>
+            <span class="ann">Tablet shows risk score card alongside summary. More context than phone.</span>
+            <div style="display:flex;gap:10px;margin-top:14px;">
+              <button class="btn-primary" style="max-width:220px;">Ask ProSe</button>
+              <button class="btn-secondary" style="max-width:180px;margin-top:0;">Download Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLET: TIMELINE -->
+    <div class="tablet-wrap">
+      <div class="tablet-screen-label">3 / 3 — Timeline / Case Tracker</div>
+      <div class="tablet-frame">
+        <div class="tab-sb"><span>9:41 AM</span><span style="font-family:'Playfair Display',serif;color:var(--gold);">⚖️ ProSe</span><span>●●● Wi-Fi ⚡</span></div>
+        <div class="tab-nav">
+          <div class="tab-logo">⚖️ ProSe</div>
+          <div class="tab-nav-item">Setup</div>
+          <div class="tab-nav-item">Documents</div>
+          <div class="tab-nav-item active">Timeline</div>
+          <div class="tab-nav-item">Profile</div>
+        </div>
+        <div class="tab-body">
+          <!-- sidebar: stats + filters -->
+          <div class="tab-sidebar">
+            <div class="tab-sh">
+              <h2>Case Timeline</h2>
+              <p>Pierce County · #24-3-00412-4</p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;">
+              <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:12px;text-align:center;">
+                <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--gold);">12</div>
+                <div style="font-size:0.64rem;color:rgba(255,255,255,0.45);margin-top:3px;">Days to Hearing</div>
+              </div>
+              <div style="background:rgba(176,64,64,0.2);border-radius:10px;padding:12px;text-align:center;">
+                <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#F8A0A0;">3</div>
+                <div style="font-size:0.64rem;color:rgba(255,255,255,0.45);margin-top:3px;">Urgent Deadlines</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:12px;text-align:center;">
+                <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:white;">7</div>
+                <div style="font-size:0.64rem;color:rgba(255,255,255,0.45);margin-top:3px;">Docs Filed</div>
+              </div>
+              <div style="background:rgba(61,139,94,0.2);border-radius:10px;padding:12px;text-align:center;">
+                <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#7DD3A8;">2</div>
+                <div style="font-size:0.64rem;color:rgba(255,255,255,0.45);margin-top:3px;">Completed</div>
+              </div>
+            </div>
+            <div class="section-title" style="color:rgba(255,255,255,0.35);">Filter Events</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:rgba(200,169,110,0.15);border-radius:8px;font-size:0.78rem;color:var(--gold);cursor:pointer;">✓ All Events</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:0.78rem;color:rgba(255,255,255,0.5);cursor:pointer;">⚠️ Deadlines Only</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:0.78rem;color:rgba(255,255,255,0.5);cursor:pointer;">📅 Hearings Only</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:0.78rem;color:rgba(255,255,255,0.5);cursor:pointer;">✅ Completed</div>
+            </div>
+            <span class="ann">Filter sidebar is persistent on tablet vs. modal on phone.</span>
+          </div>
+          <!-- right: timeline -->
+          <div class="tab-content">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+              <div class="tab-panel-title" style="margin-bottom:0;">Events & Deadlines</div>
+              <button class="btn-sm">+ Add Event</button>
+            </div>
+            <div class="tab-tl-track">
+              <div class="tab-tl-event">
+                <div class="tab-tl-dot done"></div>
+                <div class="tl-card"><div class="tl-date">Jan 15, 2025</div><div class="tl-title">Petition Filed</div><div class="tl-desc">Case initiated. Summons served to respondent on Jan 17.</div></div>
+              </div>
+              <div class="tab-tl-event">
+                <div class="tab-tl-dot done"></div>
+                <div class="tl-card"><div class="tl-date">Feb 3, 2025</div><div class="tl-title">Temporary Orders Hearing</div><div class="tl-desc">Temporary parenting schedule established. Order signed by Judge Hollis.</div></div>
+              </div>
+              <div class="tab-tl-event">
+                <div class="tab-tl-dot alert"></div>
+                <div class="tl-card alert-card"><div class="tl-date">⚠️ Feb 27, 2025 — 5 Days Away</div><div class="tl-title">Deadline: File Response to Motion</div><div class="tl-desc">Response to respondent's Motion to Modify Custody must be filed by 4:00 PM at the Pierce County Clerk's office.</div><span class="tl-action">📋 View Required Docs</span>&nbsp;&nbsp;<span class="tl-action">🗺️ Court Location</span></div>
+              </div>
+              <div class="tab-tl-event">
+                <div class="tab-tl-dot upcoming"></div>
+                <div class="tl-card upcoming-card"><div class="tl-date">Mar 6, 2025 — Upcoming</div><div class="tl-title">Custody Evaluation — Dr. Simmons</div><div class="tl-desc">In-person evaluation at 2:00 PM. Bring financial records and all communication logs.</div><span class="tl-action">📝 Prep Checklist</span>&nbsp;&nbsp;<span class="tl-action">📍 Directions</span></div>
+              </div>
+              <div class="tab-tl-event">
+                <div class="tab-tl-dot"></div>
+                <div class="tl-card"><div class="tl-date">Apr 14, 2025</div><div class="tl-title">Final Hearing</div><div class="tl-desc">Pierce County Superior Court · Dept. 12 · 9:00 AM</div></div>
+              </div>
+            </div>
+            <span class="ann">Tablet shows two action buttons per urgent card. Export button in top right.</span>
+            <button class="btn-secondary" style="max-width:220px;margin-top:16px;">Export Timeline as PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ╔═══════════════════════════════════════╗
+     ║         DESKTOP SCREENS              ║
+     ╚═══════════════════════════════════════╝ -->
+<div class="device-section">
+  <div class="device-section-label">💻 MacBook Pro 16" — Full-width canvas</div>
+  <div class="desktop-row">
+
+    <!-- DESKTOP: ONBOARDING -->
+    <div class="desktop-wrap">
+      <div class="desktop-screen-label">1 / 3 — Onboarding</div>
+      <div class="desktop-frame">
+        <div class="dt-bar">
+          <div class="dt-logo">⚖️ ProSe</div>
+          <div class="dt-nav-links">
+            <div class="dt-nav-link active">Case Setup</div>
+            <div class="dt-nav-link">Documents</div>
+            <div class="dt-nav-link">Timeline</div>
+            <div class="dt-nav-link">Coaching</div>
+          </div>
+          <div class="dt-nav-right">
+            <div class="dt-case-badge">No active case</div>
+            <div class="dt-avatar">JD</div>
+          </div>
+        </div>
+        <div class="dt-body">
+          <!-- sidebar -->
+          <div class="dt-sidebar">
+            <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:white;margin-bottom:4px;">New Case Setup</div>
+            <p style="font-size:0.76rem;color:rgba(255,255,255,0.45);line-height:1.6;margin-bottom:20px;">Complete each step to activate your personalized ProSe.</p>
+            <div class="dt-stepper" style="flex-direction:column;gap:0;">
+              <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:20px;">
+                <div style="display:flex;flex-direction:column;align-items:center;">
+                  <div class="dt-step-dot active" style="width:28px;height:28px;font-size:0.72rem;">1</div>
+                  <div style="width:2px;flex:1;background:rgba(255,255,255,0.1);margin-top:4px;min-height:36px;"></div>
+                </div>
+                <div><div style="font-size:0.82rem;font-weight:600;color:var(--gold);">Case Details</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:2px;">Role, type, jurisdiction</div></div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:20px;">
+                <div style="display:flex;flex-direction:column;align-items:center;">
+                  <div class="dt-step-dot" style="width:28px;height:28px;font-size:0.72rem;">2</div>
+                  <div style="width:2px;flex:1;background:rgba(255,255,255,0.1);margin-top:4px;min-height:36px;"></div>
+                </div>
+                <div><div style="font-size:0.82rem;font-weight:500;color:rgba(255,255,255,0.45);">Upload Documents</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:2px;">Court orders, motions</div></div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:12px;">
+                <div style="display:flex;flex-direction:column;align-items:center;">
+                  <div class="dt-step-dot" style="width:28px;height:28px;font-size:0.72rem;">3</div>
+                </div>
+                <div><div style="font-size:0.82rem;font-weight:500;color:rgba(255,255,255,0.45);">Review Dashboard</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:2px;">Coaching activated</div></div>
+              </div>
+            </div>
+            <div class="divider" style="background:rgba(255,255,255,0.08);margin:20px 0;"></div>
+            <div style="background:rgba(200,169,110,0.1);border:1px solid rgba(200,169,110,0.25);border-radius:10px;padding:14px;">
+              <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">🔒 Privacy First</div>
+              <p style="font-size:0.73rem;color:rgba(255,255,255,0.45);line-height:1.55;">All data is encrypted at rest. Your information is never shared with third parties or opposing counsel.</p>
+            </div>
+          </div>
+          <!-- main content -->
+          <div class="dt-main">
+            <div class="dt-main-header">
+              <div>
+                <h2>Your Role & Case Details</h2>
+                <p>Step 1 of 3 — Tell us about your situation</p>
+              </div>
+              <div style="background:var(--cream-dk);border-radius:8px;padding:6px 14px;font-size:0.78rem;color:var(--muted);">Step 1 of 3</div>
+            </div>
+            <div class="dt-main-body">
+              <div class="dt-card" style="margin-bottom:18px;">
+                <div class="dt-card-title">Your Role in This Case</div>
+                <div class="dt-three-col">
+                  <div class="role-card selected"><div class="rc-icon">🙋</div><div class="rc-name">Petitioner</div><div class="rc-desc">I filed the original case</div></div>
+                  <div class="role-card"><div class="rc-icon">🛡️</div><div class="rc-name">Respondent</div><div class="rc-desc">I was served papers</div></div>
+                  <div class="role-card"><div class="rc-icon">❓</div><div class="rc-name">Not Sure</div><div class="rc-desc">Help me identify my role</div></div>
+                </div>
+              </div>
+              <div class="dt-two-col" style="margin-bottom:18px;">
+                <div class="dt-card">
+                  <div class="dt-card-title">Case Information</div>
+                  <div class="dt-form-two">
+                    <div class="form-group"><label class="form-label">Case Type</label><select class="form-select"><option>Custody & Parenting Plan</option></select></div>
+                    <div class="form-group"><label class="form-label">Case Number</label><div class="form-input ph">e.g. 24-3-00412-4</div></div>
+                    <div class="form-group"><label class="form-label">County</label><div class="form-input ph">e.g. Pierce County</div></div>
+                    <div class="form-group"><label class="form-label">State</label><select class="form-select"><option>Washington</option></select></div>
+                  </div>
+                </div>
+                <div class="dt-card">
+                  <div class="dt-card-title">Family Information</div>
+                  <div class="dt-form-two">
+                    <div class="form-group"><label class="form-label">Children Involved?</label>
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                        <div class="role-card selected" style="padding:9px;"><div class="rc-name">Yes</div></div>
+                        <div class="role-card" style="padding:9px;"><div class="rc-name">No</div></div>
+                      </div>
+                    </div>
+                    <div class="form-group"><label class="form-label">Number of Children</label><div class="form-input ph">e.g. 2</div></div>
+                    <div class="form-group"><label class="form-label">Represented by Attorney?</label><select class="form-select"><option>No — Self-represented</option></select></div>
+                    <div class="form-group"><label class="form-label">Opposing Counsel?</label><select class="form-select"><option>Yes</option></select></div>
+                  </div>
+                </div>
+              </div>
+              <span class="ann">Desktop exposes all fields at once in a 2-column card grid. No scrolling required for Step 1.</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <button class="btn-primary" style="max-width:220px;">Continue to Step 2 →</button>
+                <button class="btn-secondary" style="max-width:160px;margin-top:0;">Save Draft</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESKTOP: DOCUMENT UPLOAD -->
+    <div class="desktop-wrap">
+      <div class="desktop-screen-label">2 / 3 — Document Upload & Analysis</div>
+      <div class="desktop-frame">
+        <div class="dt-bar">
+          <div class="dt-logo">⚖️ ProSe</div>
+          <div class="dt-nav-links">
+            <div class="dt-nav-link">Case Setup</div>
+            <div class="dt-nav-link active">Documents</div>
+            <div class="dt-nav-link">Timeline</div>
+            <div class="dt-nav-link">Coaching</div>
+          </div>
+          <div class="dt-nav-right">
+            <div class="dt-case-badge">#24-3-00412-4</div>
+            <div class="dt-avatar">JD</div>
+          </div>
+        </div>
+        <div class="dt-body">
+          <!-- sidebar -->
+          <div class="dt-sidebar">
+            <div class="dt-sidebar-section">Navigation</div>
+            <div class="dt-sidebar-item"><span class="dt-sidebar-icon">🏠</span> Dashboard</div>
+            <div class="dt-sidebar-item active"><span class="dt-sidebar-icon">📄</span> My Documents</div>
+            <div class="dt-sidebar-item"><span class="dt-sidebar-icon">📅</span> Case Timeline</div>
+            <div class="dt-sidebar-item"><span class="dt-sidebar-icon">💬</span> AI Coaching</div>
+            <div class="dt-sidebar-section">Documents</div>
+            <div class="dt-sidebar-item" style="color:rgba(255,255,255,0.7);background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.2);">
+              <span class="dt-sidebar-icon">📋</span>
+              <span>Parenting Plan v2 <span class="chip chip-green" style="font-size:0.58rem;padding:2px 6px;">✓</span></span>
+            </div>
+            <div class="dt-sidebar-item"><span class="dt-sidebar-icon">📄</span> Motion to Modify <span class="chip chip-gold" style="font-size:0.58rem;padding:2px 6px;margin-left:auto;">Pending</span></div>
+            <div class="dt-sidebar-item"><span class="dt-sidebar-icon">📬</span> GAL Report <span class="chip chip-blue" style="font-size:0.58rem;padding:2px 6px;margin-left:auto;">...</span></div>
+            <div style="margin-top:16px;">
+              <button class="btn-sm" style="width:100%;justify-content:center;padding:9px;">+ Upload Document</button>
+            </div>
+            <span class="ann">Desktop sidebar persists across all screens as global nav + document list.</span>
+          </div>
+          <!-- main -->
+          <div class="dt-main">
+            <div class="dt-main-header">
+              <div>
+                <h2>Parenting Plan — Draft v2</h2>
+                <p>Uploaded Feb 18, 2025 · 4.2 MB · PDF</p>
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button class="btn-ghost">⬇ Download</button>
+                <button class="btn-sm">Ask ProSe</button>
+              </div>
+            </div>
+            <div class="dt-main-body">
+              <div class="dt-doc-panel">
+                <!-- doc list -->
+                <div>
+                  <div class="dt-card-title">Document Overview</div>
+                  <div class="dt-analysis-card">
+                    <div class="dt-analysis-title">⚡ AI Analysis Report</div>
+                    <div class="dt-analysis-sub">Parenting Plan Draft v2 · Analyzed Feb 18</div>
+                    <div class="dt-analysis-point">Holiday schedule leaves 4 major holidays unaddressed — creates future dispute risk.</div>
+                    <div class="dt-analysis-point">Medical decision-making section lacks a required tie-breaking mechanism per WA standards.</div>
+                    <div class="dt-analysis-point">Relocation clause does not meet the 60-day notice requirement per RCW 26.09.520.</div>
+                    <div class="divider" style="background:rgba(255,255,255,0.1);margin:14px 0;"></div>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                      <span class="chip chip-red">3 Issues</span>
+                      <span class="chip chip-gold">Review Recommended</span>
+                    </div>
+                  </div>
+                  <div style="margin-top:14px;">
+                    <button class="btn-primary">Ask ProSe About This</button>
+                    <button class="btn-secondary">Download Full Analysis PDF</button>
+                  </div>
+                </div>
+                <!-- upload zone -->
+                <div>
+                  <div class="dt-card-title">Add More Documents</div>
+                  <div class="upload-zone" style="margin-bottom:14px;">
+                    <div class="uz-icon">📎</div>
+                    <div class="uz-title">Drag & Drop Files Here</div>
+                    <div class="uz-sub">or click to browse your computer</div>
+                    <div class="uz-types">PDF · DOCX · JPG · PNG · up to 50MB</div>
+                  </div>
+                  <div class="dt-card">
+                    <div class="dt-card-title">Document Checklist</div>
+                    <div class="dt-checklist-item"><span class="dt-check">✅</span> Parenting Plan Draft</div>
+                    <div class="dt-checklist-item"><span class="dt-check">⏳</span> Financial Declaration</div>
+                    <div class="dt-checklist-item"><span class="dt-check">⏳</span> Child Support Worksheet</div>
+                    <div class="dt-checklist-item"><span class="dt-check">⬜</span> Proposed Order</div>
+                    <div class="dt-checklist-item"><span class="dt-check">⬜</span> Proof of Service</div>
+                  </div>
+                  <span class="ann">Desktop shows recommended document checklist alongside upload. Helps user know what to gather.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESKTOP: TIMELINE -->
+    <div class="desktop-wrap">
+      <div class="desktop-screen-label">3 / 3 — Timeline / Case Tracker</div>
+      <div class="desktop-frame">
+        <div class="dt-bar">
+          <div class="dt-logo">⚖️ ProSe</div>
+          <div class="dt-nav-links">
+            <div class="dt-nav-link">Case Setup</div>
+            <div class="dt-nav-link">Documents</div>
+            <div class="dt-nav-link active">Timeline</div>
+            <div class="dt-nav-link">Coaching</div>
+          </div>
+          <div class="dt-nav-right">
+            <div class="dt-case-badge">#24-3-00412-4</div>
+            <div class="dt-avatar">JD</div>
+          </div>
+        </div>
+        <div class="dt-body">
+          <!-- sidebar -->
+          <div class="dt-sidebar">
+            <div class="dt-sidebar-section">Navigation</div>
+            <div class="dt-sidebar-item"><span class="dt-sidebar-icon">🏠</span> Dashboard</div>
+            <div class="dt-sidebar-item"><span class="dt-sidebar-icon">📄</span> My Documents</div>
+            <div class="dt-sidebar-item active"><span class="dt-sidebar-icon">📅</span> Case Timeline</div>
+            <div class="dt-sidebar-item"><span class="dt-sidebar-icon">💬</span> AI Coaching</div>
+            <div class="dt-sidebar-section">Filters</div>
+            <div class="dt-sidebar-item active" style="font-size:0.78rem;">📋 All Events</div>
+            <div class="dt-sidebar-item" style="font-size:0.78rem;">⚠️ Deadlines Only</div>
+            <div class="dt-sidebar-item" style="font-size:0.78rem;">📅 Hearings Only</div>
+            <div class="dt-sidebar-item" style="font-size:0.78rem;">✅ Completed</div>
+            <div class="dt-sidebar-section">Quick Add</div>
+            <button class="btn-sm" style="width:100%;justify-content:center;padding:9px;margin-bottom:8px;">+ Add Event</button>
+            <button class="btn-sm" style="width:100%;justify-content:center;padding:9px;background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);">⬇ Export PDF</button>
+          </div>
+          <!-- main -->
+          <div class="dt-main">
+            <div class="dt-main-header">
+              <div>
+                <h2>Case Timeline</h2>
+                <p>Pierce County Superior Court · Case #24-3-00412-4</p>
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button class="btn-ghost">⬇ Export</button>
+                <button class="btn-sm">+ Add Event</button>
+              </div>
+            </div>
+            <div class="dt-main-body">
+              <div class="dt-tl-main">
+                <!-- timeline track -->
+                <div>
+                  <div class="dt-three-col" style="margin-bottom:22px;">
+                    <div class="tl-stat"><div class="tl-num">12</div><div class="tl-lbl">Days to Final Hearing</div></div>
+                    <div class="tl-stat" style="border-color:var(--danger);background:#FFF5F5;"><div class="tl-num" style="color:var(--danger);">3</div><div class="tl-lbl">Urgent Deadlines</div></div>
+                    <div class="tl-stat"><div class="tl-num">7</div><div class="tl-lbl">Documents Filed</div></div>
+                  </div>
+                  <div class="dt-tl-track">
+                    <div class="dt-tl-event">
+                      <div class="dt-tl-dot done"></div>
+                      <div class="tl-card"><div class="tl-date">Jan 15, 2025</div><div class="tl-title">Petition Filed</div><div class="tl-desc">Case initiated in Pierce County Superior Court. Summons served Jan 17.</div></div>
+                    </div>
+                    <div class="dt-tl-event">
+                      <div class="dt-tl-dot done"></div>
+                      <div class="tl-card"><div class="tl-date">Feb 3, 2025</div><div class="tl-title">Temporary Orders Hearing</div><div class="tl-desc">Temporary residential schedule established. Order entered by Judge Hollis. Both parties present.</div></div>
+                    </div>
+                    <div class="dt-tl-event">
+                      <div class="dt-tl-dot alert"></div>
+                      <div class="tl-card alert-card">
+                        <div class="tl-date">⚠️ Feb 27, 2025 — 5 Days Away</div>
+                        <div class="tl-title">Deadline: File Response to Motion to Modify</div>
+                        <div class="tl-desc">Response must be filed at the Pierce County Clerk's Office by 4:00 PM. Failure to respond may result in a default order.</div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                          <span class="tl-action">📋 Required Docs</span>
+                          <span class="tl-action">🗺️ Court Location</span>
+                          <span class="tl-action">📝 Response Template</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dt-tl-event">
+                      <div class="dt-tl-dot upcoming"></div>
+                      <div class="tl-card upcoming-card">
+                        <div class="tl-date">Mar 6, 2025 — Upcoming</div>
+                        <div class="tl-title">Custody Evaluation — Dr. Simmons</div>
+                        <div class="tl-desc">In-person evaluation at 2:00 PM. Bring all financial records and communication logs. This evaluation carries significant weight with the court.</div>
+                        <div style="display:flex;gap:8px;margin-top:8px;">
+                          <span class="tl-action">📝 Prep Checklist</span>
+                          <span class="tl-action">📍 Directions</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dt-tl-event">
+                      <div class="dt-tl-dot"></div>
+                      <div class="tl-card"><div class="tl-date">Apr 14, 2025</div><div class="tl-title">Final Hearing</div><div class="tl-desc">Pierce County Superior Court · Dept. 12 · 9:00 AM · Judge Hollis presiding</div></div>
+                    </div>
+                  </div>
+                  <span class="ann">Desktop shows 3 action buttons per urgent event card. Timeline scrolls within main panel.</span>
+                </div>
+                <!-- right panel -->
+                <div class="dt-right-panel">
+                  <div class="dt-rp-card">
+                    <div class="dt-rp-title">⚠️ Urgent: 5 Days</div>
+                    <p style="font-size:0.78rem;color:var(--danger);font-weight:600;margin-bottom:8px;">Response to Motion to Modify</p>
+                    <p style="font-size:0.75rem;color:var(--muted);line-height:1.5;">You must file your written response by Feb 27 at 4:00 PM. ProSe has prepared a checklist to help you.</p>
+                    <button class="btn-primary" style="margin-top:12px;font-size:0.8rem;padding:10px;">View Prep Checklist</button>
+                  </div>
+                  <div class="dt-rp-card">
+                    <div class="dt-rp-title">Upcoming Prep</div>
+                    <div class="dt-checklist-item"><span class="dt-check">⬜</span> Draft Response to Motion</div>
+                    <div class="dt-checklist-item"><span class="dt-check">⬜</span> Gather financial records</div>
+                    <div class="dt-checklist-item"><span class="dt-check">⬜</span> Print communication log</div>
+                    <div class="dt-checklist-item"><span class="dt-check">✅</span> File Parenting Plan draft</div>
+                    <div class="dt-checklist-item"><span class="dt-check">✅</span> Complete GAL intake form</div>
+                  </div>
+                  <div class="dt-rp-card">
+                    <div class="dt-rp-title">Case Progress</div>
+                    <div class="dt-rp-stat-row">
+                      <div class="dt-rp-stat"><div class="dt-rp-stat-num">40%</div><div class="dt-rp-stat-lbl">Complete</div></div>
+                      <div class="dt-rp-stat"><div class="dt-rp-stat-num">91</div><div class="dt-rp-stat-lbl">Days Active</div></div>
+                    </div>
+                    <span class="ann">Right panel is contextual — updates based on selected timeline event.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
